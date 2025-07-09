@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Divisor de Gastos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%; /* Padroniza a largura */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1em;
+        }
+
+        button {
+            background: #3c8a3e; /* Verde original */
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+        }
+
+        button:hover {
+            background: #3c8a3e; /* Tom mais claro ao passar o mouse */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f9f9f9;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%; /* Padroniza a largura */
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9em;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #81C784; /* Tom mais claro compatível com verde */
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #E8F5E9; /* Fundo verde claro */
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #C8E6C9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkbox-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: calc(33.33% - 10px); /* Até 3 por linha */
+            box-sizing: border-box;
+            font-size: 0.9em;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            flex-shrink: 0; /* Impede que o slider seja redimensionado */
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.4s;
+            position: relative; /* Necessário para posicionar o elemento "before" */
+        }
+
+        .slider:before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin: 0;
+                font-size: 14px;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 10px;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            h1 {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+
+            label {
+                font-size: 1em;
+                margin-top: 5px;
+            }
+
+            input, select, button {
+                padding: 8px;
+                font-size: 0.9em;
+                width: 100%;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            li {
+                padding: 8px;
+                font-size: 0.9em;
+                margin: 5px 0;
+            }
+
+            .checkbox-list {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .switch {
+                width: calc(50% - 10px); /* Até 2 por linha */
+                box-sizing: border-box;
+            }
+
+            button {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+
+            .result {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+
+            .switch {
+                width: calc(33.33% - 10px); /* Mantém até 3 por linha no celular */
+            }
+        }
+
+        .valor-destaque {
+            color: #054620; /* Tom de laranja elegante */
+            font-weight: bold;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Divisor de Gastos</h1>
+        <Div style="display: flex; gap: 30px; align-items: center;">
+            <div style="flex: 0 0 40%; margin-right: 10px;">
+                <label>Item:</label>
+                <input type="text" id="item" placeholder="Ex: Pizza">
+            </div>
+
+            <div style="flex: 0 0 20%; margin-right: 10px;">
+                <label>Quantidade:</label>
+                <input type="number" id="quantidade" placeholder="Ex: 1">
+            </div>
+
+            <div style="flex: 0 0 20%; margin-right: 10px;">
+                <label>Valor (R$):</label>
+                <input type="number" id="valor" placeholder="Ex: 50.00">
+            </div>
+        </Div>
+
+        <label>Adicionar integrantes:</label>
+        <input type="text" id="pessoas" placeholder="Ex: Ana, João, Maria">
+
+        <label for="listaIntegrantes" style="display: none;">Integrantes:</label>
+        <div id="listaIntegrantes" class="checkbox-list" style="display: none;"> </div>
+
+        <button onclick="adicionarItem()">Adicionar</button>
+        
+        <table id="tabelaItens" border="1" style="width: 100%; border-collapse: collapse; text-align: left; display: none;">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Valor (R$)</th>
+                    <th style="width: 35%;">Item</th>
+                    <th style="width: 40%;">Integrantes</th>
+                    <th style="width: 10%;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Linhas serão adicionadas dinamicamente -->
+            </tbody>
+        </table>
+
+        <div id="resultado" class="result" style="display:none;">
+            <h4>Divisão dos gastos:</h4>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">
+                            Nome
+                        </th>
+                        <th style="width: 30%;">
+                            Total:
+                            <div><b><span id="valorTotalHeader" class="valor-destaque">R$ 0.00</span></b></div>
+                        </th>
+                        <th style="width: 30%;">
+                            Total + 10%:
+                            <div><b></b><span id="valorTotalComAcrescimoHeader" class="valor-destaque">R$ 0.00</span></b></div>
+                        </th>
+                    </tr>
+                    
+                </thead>
+                <tbody id="resultadoTabela">
+                    <!-- Linhas serão adicionadas dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const itens = [];
+
+        function adicionarItem() {
+            const item = document.getElementById('item').value.trim();
+            const quantidade = parseInt(document.getElementById('quantidade').value, 10) || 1;
+            const valorUnitario = parseFloat(document.getElementById('valor').value);
+            const novosNomes = document.getElementById('pessoas').value
+                .split(',')
+                .map(p => p.trim())
+                .filter(p => p);
+
+            // Adiciona novos checkboxes se ainda não existirem
+            const listaIntegrantes = document.getElementById('listaIntegrantes');
+            let integrantesAdicionados = false;
+
+            novosNomes.forEach(nome => {
+                if (nome && !Array.from(listaIntegrantes.children).some(label => label.textContent.trim() === nome)) {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `cb_${nome}`;
+                    checkbox.value = nome;
+                    checkbox.className = 'pessoaCheckbox';
+
+                    const slider = document.createElement('span');
+                    slider.className = 'slider';
+
+                    const label = document.createElement('label');
+                    label.className = 'switch';
+                    label.appendChild(checkbox);
+                    label.appendChild(slider);
+                    label.appendChild(document.createTextNode(` ${nome}`));
+
+                    listaIntegrantes.appendChild(label);
+                    integrantesAdicionados = true;
+                }
+            });
+
+            const labelIntegrantes = document.querySelector('label[for="listaIntegrantes"]');
+            if (listaIntegrantes.children.length > 0 || integrantesAdicionados) {
+                labelIntegrantes.style.display = 'block';
+                listaIntegrantes.style.display = 'flex';
+            } else {
+                labelIntegrantes.style.display = 'none';
+                listaIntegrantes.style.display = 'none';
+            }
+
+            const selecionadosCheckbox = Array.from(document.querySelectorAll('.pessoaCheckbox:checked')).map(cb => cb.value);
+            const todasAsPessoas = Array.from(new Set([...novosNomes, ...selecionadosCheckbox]));
+
+            if (!item || isNaN(valorUnitario) || isNaN(quantidade) || todasAsPessoas.length === 0) {
+                alert("Preencha todos os campos corretamente e informe pelo menos uma pessoa.");
+                return;
+            }
+
+            const valorTotal = valorUnitario * quantidade;
+            const itemComQuantidade = `${quantidade}x ${item} (R$${valorUnitario.toFixed(2)})`;
+            itens.push({ item: itemComQuantidade, valor: valorTotal, pessoas: todasAsPessoas });
+
+            const tabela = document.getElementById('tabelaItens').getElementsByTagName('tbody')[0];
+            tabela.innerHTML = ''; // Limpa a tabela
+
+            itens.forEach((item, i) => {
+                const novaLinha = tabela.insertRow();
+                novaLinha.insertCell(0).textContent = item.valor.toFixed(2);
+                novaLinha.insertCell(1).textContent = item.item;
+                novaLinha.insertCell(2).textContent = item.pessoas.join(', ');
+
+                const colunaExcluir = novaLinha.insertCell(3);
+                const botaoExcluir = document.createElement('button');
+                botaoExcluir.textContent = 'Excluir';
+                botaoExcluir.style.background = '#FF5722';
+                botaoExcluir.style.color = 'white';
+                botaoExcluir.style.border = 'none';
+                botaoExcluir.style.padding = '5px 10px';
+                botaoExcluir.style.borderRadius = '4px';
+                botaoExcluir.style.cursor = 'pointer';
+                botaoExcluir.onclick = () => excluirItem(i);
+                colunaExcluir.appendChild(botaoExcluir);
+            });
+
+            document.getElementById('tabelaItens').style.display = 'table';
+            finalizar();
+
+            document.getElementById('item').value = '';
+            document.getElementById('quantidade').value = '';
+            document.getElementById('valor').value = '';
+            document.getElementById('pessoas').value = '';
+            document.querySelectorAll('.pessoaCheckbox').forEach(cb => cb.checked = false);
+        }
+
+        function excluirItem(index) {
+            // Remove o item da lista
+            itens.splice(index, 1);
+
+            // Recalcula os índices e atualiza a tabela
+            const tabela = document.getElementById('tabelaItens').getElementsByTagName('tbody')[0];
+            tabela.innerHTML = ''; // Limpa a tabela
+
+            itens.forEach((item, i) => {
+                const novaLinha = tabela.insertRow();
+                novaLinha.insertCell(0).textContent = item.valor.toFixed(2);
+                novaLinha.insertCell(1).textContent = item.item;
+                novaLinha.insertCell(2).textContent = item.pessoas.join(', ');
+
+                const colunaExcluir = novaLinha.insertCell(3);
+                const botaoExcluir = document.createElement('button');
+                botaoExcluir.textContent = 'Excluir';
+                botaoExcluir.style.background = '#FF5722'; // Cor do botão
+                botaoExcluir.style.color = 'white';
+                botaoExcluir.style.border = 'none';
+                botaoExcluir.style.padding = '5px 10px';
+                botaoExcluir.style.borderRadius = '4px';
+                botaoExcluir.style.cursor = 'pointer';
+                botaoExcluir.onclick = () => excluirItem(i);
+                colunaExcluir.appendChild(botaoExcluir);
+            });
+
+            // Recalcula os resultados
+            finalizar();
+
+            // Oculta a tabela se não houver mais itens
+            if (itens.length === 0) {
+                document.getElementById('tabelaItens').style.display = 'none';
+                document.getElementById('resultado').style.display = 'none';
+            }
+        }
+
+        function finalizar() {
+            const totais = {};
+            let valorTotal = 0;
+
+            // Calcula o total por pessoa e o valor total dos gastos
+            itens.forEach(({ valor, pessoas }) => {
+                const parte = valor / pessoas.length;
+                valorTotal += valor;
+                pessoas.forEach(p => {
+                    if (!totais[p]) totais[p] = 0;
+                    totais[p] += parte;
+                });
+            });
+
+            const valorTotalComAcrescimo = valorTotal * 1.1; // Valor total + 10%
+
+            // Atualiza os valores totais no cabeçalho
+            document.getElementById('valorTotalHeader').textContent = `R$ ${valorTotal.toFixed(2)}`;
+            document.getElementById('valorTotalComAcrescimoHeader').textContent = `R$ ${valorTotalComAcrescimo.toFixed(2)}`;
+
+            const tabelaResultado = document.getElementById('resultadoTabela');
+            tabelaResultado.innerHTML = ''; // Limpa tabela anterior
+
+            for (const pessoa in totais) {
+                const valorPorPessoa = totais[pessoa];
+                const valorPorPessoaComAcrescimo = valorPorPessoa * 1.1; // Valor por pessoa + 10%
+
+                const novaLinha = tabelaResultado.insertRow();
+                novaLinha.insertCell(0).textContent = pessoa;
+                novaLinha.insertCell(1).textContent = valorPorPessoa.toFixed(2);
+                novaLinha.insertCell(2).textContent = valorPorPessoaComAcrescimo.toFixed(2);
+            }
+
+            document.getElementById('resultado').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
