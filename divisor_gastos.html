@@ -392,7 +392,8 @@
             const novosNomes = document.getElementById('pessoas').value
                 .split(',')
                 .map(p => p.trim())
-                .filter(p => p);
+                .filter(p => p)
+                .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()); // Ajusta para primeira letra maiúscula
 
             // Adiciona novos checkboxes se ainda não existirem
             const listaIntegrantes = document.getElementById('listaIntegrantes');
