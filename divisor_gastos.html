@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <title>Divisor de Gastos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
             color: #333;
+        }
+
+        .material-icons {
+            font-size: 24px;
+            color: white;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         h1 {
@@ -54,8 +66,12 @@
             text-align: center;
         }
 
-        button:hover {
+        button.adicionar:hover {
             background: #3c8a3e; /* Tom mais claro ao passar o mouse */
+        }
+
+        button.remover:hover {
+            background: #FF5722; /* Tom mais claro ao passar o mouse */
         }
 
         ul {
@@ -246,6 +262,36 @@
         #inputsContainer {
             margin-top: 20px;
         }
+
+        .botao-icone {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .botao-icone .material-icons {
+            font-size: 28px;
+            transition: color 0.3s ease;
+        }
+
+        .botao-adicionar .material-icons {
+            color: #37753b; /* Verde suave */
+        }
+
+        .botao-adicionar:hover .material-icons {
+            color: #ffffff; /* Verde mais escuro ao passar o mouse */
+        }
+
+        .botao-remover .material-icons {
+            color: #FF5722; /* Vermelho suave */
+        }
+
+        .botao-remover:hover .material-icons {
+            color: #ffffff; /* Vermelho mais escuro ao passar o mouse */
+        }
     </style>
 </head>
 <body>
@@ -269,7 +315,9 @@
                 </div>
 
                 <div style="flex: 0 0 10%; display: flex; align-items: flex-end; justify-content: center;">
-                    <button onclick="adicionarLinha()" style="padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">+</button>
+                    <button class="botao-icone botao-adicionar adicionar" onclick="adicionarLinha()">
+                        <span class="material-icons">add</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -527,7 +575,9 @@
                     <input type="number" placeholder="Ex: 50.00">
                 </div>
                 <div style="flex: 0 0 10%; display: flex; align-items: flex-end; justify-content: center;">
-                    <button onclick="removerLinha(this)" style="padding: 10px; background-color: #FF5722; color: white; border: none; border-radius: 4px; cursor: pointer;">X</button>
+                    <button class="botao-icone botao-remover remover" onclick="removerLinha(this)">
+                        <span class="material-icons">delete</span>
+                    </button>
                 </div>
             `;
 
