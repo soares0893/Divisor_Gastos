@@ -326,9 +326,21 @@
         const itens = [];
 
         function adicionarItem() {
-            const item = document.getElementById('item').value.trim();
-            const quantidade = parseInt(document.getElementById('quantidade').value, 10) || 1;
-            const valorUnitario = parseFloat(document.getElementById('valor').value);
+            const linhasTemporarias = document.querySelectorAll('#inputsContainer .input-group');
+            const itensTemporarios = [];
+
+            // Captura os valores de todas as linhas temporárias
+            linhasTemporarias.forEach(linha => {
+                const inputs = linha.querySelectorAll('input');
+                const item = inputs[0]?.value.trim();
+                const quantidade = parseInt(inputs[1]?.value, 10) || 1;
+                const valorUnitario = parseFloat(inputs[2]?.value);
+
+                if (item && !isNaN(quantidade) && !isNaN(valorUnitario)) {
+                    itensTemporarios.push({ item, quantidade, valorUnitario });
+                }
+            });
+
             const novosNomes = document.getElementById('pessoas').value
                 .split(',')
                 .map(p => p.trim())
@@ -372,14 +384,17 @@
             const selecionadosCheckbox = Array.from(document.querySelectorAll('.pessoaCheckbox:checked')).map(cb => cb.value);
             const todasAsPessoas = Array.from(new Set([...novosNomes, ...selecionadosCheckbox]));
 
-            if (!item || isNaN(valorUnitario) || isNaN(quantidade) || todasAsPessoas.length === 0) {
+            if (itensTemporarios.length === 0 || todasAsPessoas.length === 0) {
                 alert("Preencha todos os campos corretamente e informe pelo menos uma pessoa.");
                 return;
             }
 
-            const valorTotal = valorUnitario * quantidade;
-            const itemComQuantidade = `${quantidade}x ${item} (R$${valorUnitario.toFixed(2)})`;
-            itens.push({ item: itemComQuantidade, valor: valorTotal, pessoas: todasAsPessoas });
+            // Adiciona os itens temporários ao array de itens
+            itensTemporarios.forEach(({ item, quantidade, valorUnitario }) => {
+                const valorTotal = valorUnitario * quantidade;
+                const itemComQuantidade = `${quantidade}x ${item} (R$${valorUnitario.toFixed(2)})`;
+                itens.push({ item: itemComQuantidade, valor: valorTotal, pessoas: todasAsPessoas });
+            });
 
             const tabela = document.getElementById('tabelaItens').getElementsByTagName('tbody')[0];
             tabela.innerHTML = ''; // Limpa a tabela
@@ -406,11 +421,17 @@
             document.getElementById('tabelaItens').style.display = 'table';
             finalizar();
 
+            // Limpa os campos de entrada
             document.getElementById('item').value = '';
             document.getElementById('quantidade').value = '';
             document.getElementById('valor').value = '';
             document.getElementById('pessoas').value = '';
             document.querySelectorAll('.pessoaCheckbox').forEach(cb => cb.checked = false);
+
+            // Remove as linhas temporárias geradas
+            linhasTemporarias.forEach((linha, index) => {
+                if (index > 0) linha.remove(); // Preserva a primeira linha
+            });
         }
 
         function excluirItem(index) {
