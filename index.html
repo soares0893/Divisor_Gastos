@@ -8,25 +8,17 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
-            color: #333;
-        }
-
-        .material-icons {
-            font-size: 24px;
-            color: white;
-        }
-
-        button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin: 0;
+            background: url('./img/download.png') no-repeat center center fixed;
+            background-size: cover;
+            background-blend-mode: overlay; /* Combina a imagem com o fundo */
+            background-color: rgba(0, 0, 0, 0.6); /* Fundo escurecido com maior transparência */
+            color: #f2f2f2; /* Texto branco puro para melhor contraste */
         }
 
         h1 {
             text-align: center;
-            color: #4CAF50;
+            color: #ffffff; /* Branco puro para destacar o título */
             font-size: 2em;
             margin-bottom: 20px;
         }
@@ -34,32 +26,44 @@
         .container {
             max-width: 700px;
             margin: auto;
-            background: white;
+            /*background: rgba(0, 0, 0, 0.3); /* Fundo semi-transparente mais claro */
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         label {
             display: block;
             margin-top: 10px;
             font-weight: bold;
-            color: #555;
+            color: #ffffff; /* Branco puro para melhor legibilidade */
         }
 
         input, select, button {
             margin-top: 10px;
             padding: 10px;
-            width: 100%; /* Padroniza a largura */
-            border: 1px solid #ccc;
+            width: 100%;
+            border: 2px solid #FFD700; /* Borda dourada mais visível */
             border-radius: 4px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
+            color: #ffffff; /* Texto branco puro */
             font-size: 1em;
         }
 
+        input::placeholder {
+            color: #FFD700; /* Placeholder dourado para melhor contraste */
+            opacity: 1; /* Garante que o texto do placeholder seja visível */
+        }
+
+        input:focus {
+            border-color: #FFA500; /* Borda laranja ao focar */
+            outline: none; /* Remove o outline padrão */
+            box-shadow: 0 0 5px #FFA500; /* Adiciona um efeito de foco */
+        }
+
         button {
-            background: #3c8a3e; /* Verde original */
-            color: white;
+            background: #FFD700; /* Dourado */
+            color: #000; /* Texto preto */
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
@@ -67,11 +71,11 @@
         }
 
         button.adicionar:hover {
-            background: #3c8a3e; /* Tom mais claro ao passar o mouse */
+            background: #FFA500; /* Laranja ao passar o mouse */
         }
 
         button.remover:hover {
-            background: #FF5722; /* Tom mais claro ao passar o mouse */
+            background: #FF4500; /* Vermelho ao passar o mouse */
         }
 
         ul {
@@ -80,52 +84,68 @@
         }
 
         li {
-            background: #f9f9f9;
+            background: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
             margin: 5px 0;
             padding: 10px;
             border-radius: 4px;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #FFD700; /* Borda dourada */
+            color: #ffffff; /* Texto branco puro */
         }
 
         table {
-            width: 100%; /* Padroniza a largura */
+            width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             font-size: 0.9em;
-            background-color: #fff;
+            background-color: rgba(0, 0, 0, 0.8); /* Fundo preto semi-transparente */
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         th, td {
             padding: 10px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #FFD700; /* Borda dourada */
+            color: #ffffff; /* Branco puro para melhor contraste */
         }
 
         th {
-            background-color: #81C784; /* Tom mais claro compatível com verde */
-            color: white;
+            background-color: #FFD700; /* Dourado */
+            color: #000; /* Texto preto */
             font-weight: bold;
         }
 
         tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
+            background-color: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente ao passar o mouse */
         }
 
         .result {
             margin-top: 20px;
-            background: #E8F5E9; /* Fundo verde claro */
+            background: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
             padding: 10px;
             border-radius: 4px;
-            border: 1px solid #C8E6C9;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #FFD700; /* Borda dourada */
+            color: #ffffff; /* Texto branco puro */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .valor-destaque {
+            color: #FFD700; /* Dourado para contraste com o fundo escuro */
+            font-weight: bold;
+            font-size: 1.2em; /* Aumenta o tamanho para melhor visibilidade */
+        }
+
+        .botao-icone .material-icons {
+            color: #FFD700; /* Ícones dourados */
+        }
+
+        .botao-adicionar:hover .material-icons {
+            color: #FFA500; /* Ícones laranja ao passar o mouse */
+        }
+
+        .botao-remover:hover .material-icons {
+            color: #FF4500; /* Ícones vermelhos ao passar o mouse */
         }
 
         .checkbox-list {
@@ -174,7 +194,7 @@
         }
 
         input:checked + .slider {
-            background-color: #4CAF50;
+            background-color: #FFD700;
         }
 
         input:checked + .slider:before {
@@ -246,12 +266,6 @@
             }
         }
 
-        .valor-destaque {
-            color: #054620; /* Tom de laranja elegante */
-            font-weight: bold;
-            font-size: 1em;
-        }
-
         .input-group {
             display: flex;
             gap: 5%;
@@ -278,7 +292,7 @@
         }
 
         .botao-adicionar .material-icons {
-            color: #37753b; /* Verde suave */
+            color: #FFD700; /* Verde suave */
         }
 
         .botao-adicionar:hover .material-icons {
@@ -306,6 +320,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        #mensagemInicial img {
+            max-width: 300px; /* Limita o tamanho da imagem */
+            height: auto;
+            margin: auto;
+        }
+
+        @media (max-width: 768px) {
+            #mensagemInicial img {
+                max-width: 200px; /* Ajusta o tamanho para telas menores */
+            }
+        }
+
+        #resultadoTabela td {
+            color: #FFD700; /* Dourado para destacar os valores */
         }
     </style>
 </head>
@@ -383,6 +413,7 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 
     <script>
@@ -553,7 +584,10 @@
 
             // Atualiza os valores totais no cabeçalho
             document.getElementById('valorTotalHeader').textContent = `R$ ${valorTotal.toFixed(2)}`;
+            document.getElementById('valorTotalHeader').style.color = 'black'; // Define a cor do valor total
+
             document.getElementById('valorTotalComAcrescimoHeader').textContent = `R$ ${valorTotalComAcrescimo.toFixed(2)}`;
+            document.getElementById('valorTotalComAcrescimoHeader').style.color = 'black'; // Define a cor do valor total
 
             const tabelaResultado = document.getElementById('resultadoTabela');
             tabelaResultado.innerHTML = ''; // Limpa tabela anterior
@@ -604,6 +638,22 @@
             const linha = botao.parentElement.parentElement; // Seleciona o div pai da linha
             linha.remove();
         }
+
+        function verificarDados() {
+            const tabelaItens = document.getElementById('tabelaItens');
+            const mensagemInicial = document.getElementById('mensagemInicial');
+
+            if (itens.length === 0) {
+                tabelaItens.style.display = 'none';
+                mensagemInicial.style.display = 'block';
+            } else {
+                tabelaItens.style.display = 'table';
+                mensagemInicial.style.display = 'none';
+            }
+        }
+
+        // Chame a função ao carregar a página
+        document.addEventListener('DOMContentLoaded', verificarDados);
     </script>
 </body>
 </html>
