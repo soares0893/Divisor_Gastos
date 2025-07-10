@@ -1,0 +1,331 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: url('./img/download.png') no-repeat center center fixed;
+    background-size: cover;
+    background-blend-mode: overlay; /* Combina a imagem com o fundo */
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo escurecido com maior transparência */
+    color: #f2f2f2; /* Texto branco puro para melhor contraste */
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff; /* Branco puro para destacar o título */
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    /*background: rgba(0, 0, 0, 0.3); /* Fundo semi-transparente mais claro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #ffffff; /* Branco puro para melhor legibilidade */
+}
+
+input, select, button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: 2px solid #FFD700; /* Borda dourada mais visível */
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
+    color: #ffffff; /* Texto branco puro */
+    font-size: 1em;
+}
+
+input::placeholder {
+    color: #FFD700; /* Placeholder dourado para melhor contraste */
+    opacity: 1; /* Garante que o texto do placeholder seja visível */
+}
+
+input:focus {
+    border-color: #FFA500; /* Borda laranja ao focar */
+    outline: none; /* Remove o outline padrão */
+    box-shadow: 0 0 5px #FFA500; /* Adiciona um efeito de foco */
+}
+
+button {
+    background: #FFD700; /* Dourado */
+    color: #000; /* Texto preto */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: center;
+}
+
+button.adicionar:hover {
+    background: #FFA500; /* Laranja ao passar o mouse */
+}
+
+button.remover:hover {
+    background: #FF4500; /* Vermelho ao passar o mouse */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #FFD700; /* Borda dourada */
+    color: #ffffff; /* Texto branco puro */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo preto semi-transparente */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #FFD700; /* Borda dourada */
+    color: #ffffff; /* Branco puro para melhor contraste */
+}
+
+th {
+    background-color: #FFD700; /* Dourado */
+    color: #000; /* Texto preto */
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente ao passar o mouse */
+}
+
+.result {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente */
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #FFD700; /* Borda dourada */
+    color: #ffffff; /* Texto branco puro */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.valor-destaque {
+    color: #FFD700; /* Dourado para contraste com o fundo escuro */
+    font-weight: bold;
+    font-size: 1.2em; /* Aumenta o tamanho para melhor visibilidade */
+}
+
+.botao-icone .material-icons {
+    color: #FFD700; /* Ícones dourados */
+}
+
+.botao-adicionar:hover .material-icons {
+    color: #FFA500; /* Ícones laranja ao passar o mouse */
+}
+
+.botao-remover:hover .material-icons {
+    color: #FF4500; /* Ícones vermelhos ao passar o mouse */
+}
+
+.checkbox-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: calc(33.33% - 10px); /* Até 3 por linha */
+    box-sizing: border-box;
+    font-size: 0.9em;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    flex-shrink: 0; /* Impede que o slider seja redimensionado */
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.4s;
+    position: relative; /* Necessário para posicionar o elemento "before" */
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #FFD700;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+@media (max-width: 768px) {
+    body {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 10px;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    h1 {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 1em;
+        margin-top: 5px;
+    }
+
+    input, select, button {
+        padding: 8px;
+        font-size: 0.9em;
+        width: 100%;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        padding: 8px;
+        font-size: 0.9em;
+        margin: 5px 0;
+    }
+
+    .checkbox-list {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .switch {
+        width: calc(50% - 10px); /* Até 2 por linha */
+        box-sizing: border-box;
+    }
+
+    button {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+
+    .result {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+
+    .switch {
+        width: calc(33.33% - 10px); /* Mantém até 3 por linha no celular */
+    }
+}
+
+.input-group {
+    display: flex;
+    gap: 5%;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#inputsContainer {
+    margin-top: 20px;
+}
+
+.botao-icone {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botao-icone .material-icons {
+    font-size: 28px;
+    transition: color 0.3s ease;
+}
+
+.botao-adicionar .material-icons {
+    color: #FFD700; /* Verde suave */
+}
+
+.botao-adicionar:hover .material-icons {
+    color: #ffffff; /* Verde mais escuro ao passar o mouse */
+}
+
+.botao-remover .material-icons {
+    color: #FF5722; /* Vermelho suave */
+}
+
+.botao-remover:hover .material-icons {
+    color: #ffffff; /* Vermelho mais escuro ao passar o mouse */
+}
+
+.input-group div {
+    flex: 0 0 auto; /* Ajusta o tamanho dos inputs */
+}
+
+.input-group div:nth-child(2) {
+    flex: 0 0 10%; /* Reduz o tamanho do input de "Qtd" */
+}
+
+.botao-icone {
+    flex: 0 0 5%; /* Ajusta o tamanho do botão */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mensagemInicial img {
+    max-width: 300px; /* Limita o tamanho da imagem */
+    height: auto;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    #mensagemInicial img {
+        max-width: 200px; /* Ajusta o tamanho para telas menores */
+    }
+}
+
+#resultadoTabela td {
+    color: #FFD700; /* Dourado para destacar os valores */
+}
