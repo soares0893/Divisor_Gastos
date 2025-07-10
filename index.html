@@ -368,7 +368,7 @@
         </div>
 
         <label>Adicionar integrantes:</label>
-        <input type="text" id="pessoas" placeholder="Ex: Ana, João, Maria">
+        <input type="text" id="pessoas" placeholder="Ex: Ana, João, Maria" style="width: 95%;">
 
         <label for="listaIntegrantes" style="display: none;">Integrantes:</label>
         <div id="listaIntegrantes" class="checkbox-list" style="display: none;"> </div>
@@ -429,6 +429,11 @@
                 const item = inputs[0]?.value.trim();
                 const quantidade = parseInt(inputs[1]?.value, 10) || 1;
                 const valorUnitario = parseFloat(inputs[2]?.value);
+
+                if (parseInt(inputs[1]?.value, 10) < 0) {
+                    alert("A quantidade não pode ser negativa.");
+                    return;
+                }
 
                 if (item && !isNaN(quantidade) && !isNaN(valorUnitario)) {
                     itensTemporarios.push({ item, quantidade, valorUnitario });
@@ -509,7 +514,11 @@
                 botaoExcluir.style.padding = '5px 10px';
                 botaoExcluir.style.borderRadius = '4px';
                 botaoExcluir.style.cursor = 'pointer';
-                botaoExcluir.onclick = () => excluirItem(i);
+                botaoExcluir.onclick = () => {
+                    if (confirm("Tem certeza que deseja excluir este item?")) {
+                        excluirItem(i);
+                    }
+                };
                 colunaExcluir.appendChild(botaoExcluir);
             });
 
@@ -552,7 +561,11 @@
                 botaoExcluir.style.padding = '5px 10px';
                 botaoExcluir.style.borderRadius = '4px';
                 botaoExcluir.style.cursor = 'pointer';
-                botaoExcluir.onclick = () => excluirItem(i);
+                botaoExcluir.onclick = () => {
+                    if (confirm("Tem certeza que deseja excluir este item?")) {
+                        excluirItem(i);
+                    }
+                };
                 colunaExcluir.appendChild(botaoExcluir);
             });
 
