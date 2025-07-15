@@ -88,18 +88,21 @@ function adicionarItem() {
 
         const colunaExcluir = novaLinha.insertCell(3);
         const botaoExcluir = document.createElement('button');
-        botaoExcluir.textContent = 'Excluir';
-        botaoExcluir.style.background = '#FF5722';
-        botaoExcluir.style.color = 'white';
-        botaoExcluir.style.border = 'none';
-        botaoExcluir.style.padding = '5px 10px';
-        botaoExcluir.style.borderRadius = '4px';
-        botaoExcluir.style.cursor = 'pointer';
+        botaoExcluir.className = 'botao-icone botao-remover remover'; // Adiciona classes para estilo
+        botaoExcluir.style.background = 'none'; // Remove o fundo
+        botaoExcluir.style.border = 'none'; // Remove a borda
+        botaoExcluir.style.cursor = 'pointer'; // Define o cursor como ponteiro
         botaoExcluir.onclick = () => {
             if (confirm("Tem certeza que deseja excluir este item?")) {
                 excluirItem(i);
             }
         };
+
+        const iconeExcluir = document.createElement('span');
+        iconeExcluir.className = 'material-icons';
+        iconeExcluir.textContent = 'delete'; // Ícone do Material Icons
+
+        botaoExcluir.appendChild(iconeExcluir);
         colunaExcluir.appendChild(botaoExcluir);
     });
 
@@ -135,18 +138,21 @@ function excluirItem(index) {
 
         const colunaExcluir = novaLinha.insertCell(3);
         const botaoExcluir = document.createElement('button');
-        botaoExcluir.textContent = 'Excluir';
-        botaoExcluir.style.background = '#FF5722'; // Cor do botão
-        botaoExcluir.style.color = 'white';
-        botaoExcluir.style.border = 'none';
-        botaoExcluir.style.padding = '5px 10px';
-        botaoExcluir.style.borderRadius = '4px';
-        botaoExcluir.style.cursor = 'pointer';
+        botaoExcluir.className = 'botao-icone botao-remover remover'; // Adiciona classes para estilo
+        botaoExcluir.style.background = 'none'; // Remove o fundo
+        botaoExcluir.style.border = 'none'; // Remove a borda
+        botaoExcluir.style.cursor = 'pointer'; // Define o cursor como ponteiro
         botaoExcluir.onclick = () => {
             if (confirm("Tem certeza que deseja excluir este item?")) {
                 excluirItem(i);
             }
         };
+
+        const iconeExcluir = document.createElement('span');
+        iconeExcluir.className = 'material-icons';
+        iconeExcluir.textContent = 'delete'; // Ícone do Material Icons
+
+        botaoExcluir.appendChild(iconeExcluir);
         colunaExcluir.appendChild(botaoExcluir);
     });
 
