@@ -86,7 +86,14 @@ function adicionarItem() {
         novaLinha.insertCell(1).textContent = item.item;
         novaLinha.insertCell(2).textContent = item.pessoas.join(', ');
 
-        const colunaExcluir = novaLinha.insertCell(3);
+        const colunaAcoes = novaLinha.insertCell(3);
+
+        // Contêiner para os botões
+        const containerBotoes = document.createElement('div');
+        containerBotoes.style.display = 'flex';
+        containerBotoes.style.gap = '10px'; // Espaçamento entre os botões
+
+        // Botão de excluir
         const botaoExcluir = document.createElement('button');
         botaoExcluir.className = 'botao-icone botao-remover remover'; // Adiciona classes para estilo
         botaoExcluir.style.background = 'none'; // Remove o fundo
@@ -103,7 +110,27 @@ function adicionarItem() {
         iconeExcluir.textContent = 'delete'; // Ícone do Material Icons
 
         botaoExcluir.appendChild(iconeExcluir);
-        colunaExcluir.appendChild(botaoExcluir);
+        containerBotoes.appendChild(botaoExcluir);
+
+        // Botão de editar
+        const botaoEditar = document.createElement('button');
+        botaoEditar.className = 'botao-icone botao-editar editar'; // Adiciona classes para estilo
+        botaoEditar.style.background = 'none'; // Remove o fundo
+        botaoEditar.style.border = 'none'; // Remove a borda
+        botaoEditar.style.cursor = 'pointer'; // Define o cursor como ponteiro
+        botaoEditar.onclick = () => {
+            editarItem(i); // Função para editar o item
+        };
+
+        const iconeEditar = document.createElement('span');
+        iconeEditar.className = 'material-icons';
+        iconeEditar.textContent = 'edit'; // Ícone do Material Icons
+
+        botaoEditar.appendChild(iconeEditar);
+        containerBotoes.appendChild(botaoEditar);
+
+        // Adiciona o contêiner à coluna
+        colunaAcoes.appendChild(containerBotoes);
     });
 
     document.getElementById('tabelaItens').style.display = 'table';
@@ -136,7 +163,14 @@ function excluirItem(index) {
         novaLinha.insertCell(1).textContent = item.item;
         novaLinha.insertCell(2).textContent = item.pessoas.join(', ');
 
-        const colunaExcluir = novaLinha.insertCell(3);
+        const colunaAcoes = novaLinha.insertCell(3);
+
+        // Contêiner para os botões
+        const containerBotoes = document.createElement('div');
+        containerBotoes.style.display = 'flex';
+        containerBotoes.style.gap = '10px'; // Espaçamento entre os botões
+
+        // Botão de excluir
         const botaoExcluir = document.createElement('button');
         botaoExcluir.className = 'botao-icone botao-remover remover'; // Adiciona classes para estilo
         botaoExcluir.style.background = 'none'; // Remove o fundo
@@ -153,7 +187,27 @@ function excluirItem(index) {
         iconeExcluir.textContent = 'delete'; // Ícone do Material Icons
 
         botaoExcluir.appendChild(iconeExcluir);
-        colunaExcluir.appendChild(botaoExcluir);
+        containerBotoes.appendChild(botaoExcluir);
+
+        // Botão de editar
+        const botaoEditar = document.createElement('button');
+        botaoEditar.className = 'botao-icone botao-editar editar'; // Adiciona classes para estilo
+        botaoEditar.style.background = 'none'; // Remove o fundo
+        botaoEditar.style.border = 'none'; // Remove a borda
+        botaoEditar.style.cursor = 'pointer'; // Define o cursor como ponteiro
+        botaoEditar.onclick = () => {
+            editarItem(i); // Função para editar o item
+        };
+
+        const iconeEditar = document.createElement('span');
+        iconeEditar.className = 'material-icons';
+        iconeEditar.textContent = 'edit'; // Ícone do Material Icons
+
+        botaoEditar.appendChild(iconeEditar);
+        containerBotoes.appendChild(botaoEditar);
+
+        // Adiciona o contêiner à coluna
+        colunaAcoes.appendChild(containerBotoes);
     });
 
     // Recalcula os resultados
