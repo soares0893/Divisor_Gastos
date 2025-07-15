@@ -99,6 +99,7 @@ function adicionarItem() {
         botaoExcluir.style.background = 'none'; // Remove o fundo
         botaoExcluir.style.border = 'none'; // Remove a borda
         botaoExcluir.style.cursor = 'pointer'; // Define o cursor como ponteiro
+        botaoExcluir.style.width = '15px'; // Define a largura do botão
         botaoExcluir.onclick = () => {
             if (confirm("Tem certeza que deseja excluir este item?")) {
                 excluirItem(i);
@@ -118,6 +119,7 @@ function adicionarItem() {
         botaoEditar.style.background = 'none'; // Remove o fundo
         botaoEditar.style.border = 'none'; // Remove a borda
         botaoEditar.style.cursor = 'pointer'; // Define o cursor como ponteiro
+        botaoEditar.style.width = '15px'; // Define a largura do botão
         botaoEditar.onclick = () => {
             editarItem(i); // Função para editar o item
         };
@@ -125,6 +127,7 @@ function adicionarItem() {
         const iconeEditar = document.createElement('span');
         iconeEditar.className = 'material-icons';
         iconeEditar.textContent = 'edit'; // Ícone do Material Icons
+        iconeEditar.style.color = 'white'; // Define a cor do ícone
 
         botaoEditar.appendChild(iconeEditar);
         containerBotoes.appendChild(botaoEditar);
