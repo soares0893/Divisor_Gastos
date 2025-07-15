@@ -179,6 +179,7 @@ function excluirItem(index) {
         botaoExcluir.style.background = 'none'; // Remove o fundo
         botaoExcluir.style.border = 'none'; // Remove a borda
         botaoExcluir.style.cursor = 'pointer'; // Define o cursor como ponteiro
+        botaoExcluir.style.width = '15px'; // Define a largura do botão
         botaoExcluir.onclick = () => {
             if (confirm("Tem certeza que deseja excluir este item?")) {
                 excluirItem(i);
@@ -198,6 +199,7 @@ function excluirItem(index) {
         botaoEditar.style.background = 'none'; // Remove o fundo
         botaoEditar.style.border = 'none'; // Remove a borda
         botaoEditar.style.cursor = 'pointer'; // Define o cursor como ponteiro
+        botaoEditar.style.width = '15px'; // Define a largura do botão
         botaoEditar.onclick = () => {
             editarItem(i); // Função para editar o item
         };
