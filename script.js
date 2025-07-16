@@ -1,5 +1,19 @@
 const itens = [];
 
+function atualizarCache() {
+    localStorage.setItem('itens', JSON.stringify(itens));
+}
+
+function cleanCache() {
+    localStorage.removeItem('itens');
+    itens.length = 0; // Limpa o array de itens
+    document.getElementById('tabelaItens').style.display = 'none'; // Oculta a tabela
+    document.getElementById('resultado').style.display = 'none'; // Oculta o resultado
+    document.getElementById('listaIntegrantes').style.display = 'none'; // Limpa os campos de entrada
+    document.getElementById('listaIntegrantes').innerHTML = ''; // Limpa a lista de integrante
+    document.querySelector('label[for="listaIntegrantes"]').style.display = 'none'; // Oculta o label
+}
+
 function adicionarItem() {
     const linhasTemporarias = document.querySelectorAll('#inputsContainer .input-group');
     const itensTemporarios = [];
@@ -150,6 +164,8 @@ function adicionarItem() {
     linhasTemporarias.forEach((linha, index) => {
         if (index > 0) linha.remove(); // Preserva a primeira linha
     });
+
+    atualizarCache()
 }
 
 function excluirItem(index) {
@@ -223,6 +239,8 @@ function excluirItem(index) {
         document.getElementById('tabelaItens').style.display = 'none';
         document.getElementById('resultado').style.display = 'none';
     }
+
+    atualizarCache()
 }
 
 function finalizar() {
@@ -300,16 +318,132 @@ function removerLinha(botao) {
 
 function verificarDados() {
     const tabelaItens = document.getElementById('tabelaItens');
-    const mensagemInicial = document.getElementById('mensagemInicial');
 
     if (itens.length === 0) {
         tabelaItens.style.display = 'none';
-        mensagemInicial.style.display = 'block';
     } else {
         tabelaItens.style.display = 'table';
-        mensagemInicial.style.display = 'none';
+    }
+}
+
+// Função para verificar cache e carregar itens
+function carregarItensDoCache() {
+    const itensCache = localStorage.getItem('itens');
+    
+    if (itensCache) {
+        try {
+            const itensArmazenados = JSON.parse(itensCache);
+            itens.push(...itensArmazenados);
+
+            // Cria os checkboxes para os integrantes no cache
+            const listaIntegrantes = document.getElementById('listaIntegrantes');
+            const nomesIntegrantes = new Set(itensArmazenados.flatMap(item => item.pessoas)); // Extrai os nomes únicos
+
+            nomesIntegrantes.forEach(nome => {
+                if (!Array.from(listaIntegrantes.children).some(label => label.textContent.trim() === nome)) {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `cb_${nome}`;
+                    checkbox.value = nome;
+                    checkbox.className = 'pessoaCheckbox';
+
+                    const slider = document.createElement('span');
+                    slider.className = 'slider';
+
+                    const label = document.createElement('label');
+                    label.className = 'switch';
+                    label.appendChild(checkbox);
+                    label.appendChild(slider);
+                    label.appendChild(document.createTextNode(` ${nome}`));
+
+                    listaIntegrantes.appendChild(label);
+                }
+            });
+            // Atualiza a visibilidade da lista de integrantes
+            const labelIntegrantes = document.querySelector('label[for="listaIntegrantes"]');
+            if (listaIntegrantes.children.length > 0) {
+                labelIntegrantes.style.display = 'block';
+                listaIntegrantes.style.display = 'flex';
+            } else {
+                labelIntegrantes.style.display = 'none';
+                listaIntegrantes.style.display = 'none';
+            }
+
+            // Atualiza a tabela com os itens do cache
+            const tabela = document.getElementById('tabelaItens').getElementsByTagName('tbody')[0];
+            tabela.innerHTML = ''; // Limpa a tabela
+
+            itens.forEach((item, i) => {
+                const novaLinha = tabela.insertRow();
+                novaLinha.insertCell(0).textContent = item.valor.toFixed(2);
+                novaLinha.insertCell(1).textContent = item.item;
+                novaLinha.insertCell(2).textContent = item.pessoas.join(', ');
+
+                const colunaAcoes = novaLinha.insertCell(3);
+
+                // Contêiner para os botões
+                const containerBotoes = document.createElement('div');
+                containerBotoes.style.display = 'flex';
+                containerBotoes.style.gap = '10px';
+
+                // Botão de excluir
+                const botaoExcluir = document.createElement('button');
+                botaoExcluir.className = 'botao-icone botao-remover remover';
+                botaoExcluir.style.background = 'none';
+                botaoExcluir.style.border = 'none';
+                botaoExcluir.style.cursor = 'pointer';
+                botaoExcluir.style.width = '15px';
+                botaoExcluir.onclick = () => {
+                    if (confirm("Tem certeza que deseja excluir este item?")) {
+                        excluirItem(i);
+                    }
+                };
+
+                const iconeExcluir = document.createElement('span');
+                iconeExcluir.className = 'material-icons';
+                iconeExcluir.textContent = 'delete';
+
+                botaoExcluir.appendChild(iconeExcluir);
+                containerBotoes.appendChild(botaoExcluir);
+
+                // Botão de editar
+                const botaoEditar = document.createElement('button');
+                botaoEditar.className = 'botao-icone botao-editar editar';
+                botaoEditar.style.background = 'none';
+                botaoEditar.style.border = 'none';
+                botaoEditar.style.cursor = 'pointer';
+                botaoEditar.style.width = '15px';
+                botaoEditar.onclick = () => {
+                    editarItem(i);
+                };
+
+                const iconeEditar = document.createElement('span');
+                iconeEditar.className = 'material-icons';
+                iconeEditar.textContent = 'edit';
+
+                botaoEditar.appendChild(iconeEditar);
+                containerBotoes.appendChild(botaoEditar);
+
+                colunaAcoes.appendChild(containerBotoes);
+            });
+
+            document.getElementById('tabelaItens').style.display = 'table';
+
+            verificarDados();
+
+            if(itens.length > 0) {
+            finalizar();
+            }
+
+        } catch (error) {
+            console.error("Erro ao carregar os itens do cache:", error);
+        }
+    } else {
+        verificarDados();
     }
 }
 
 // Chame a função ao carregar a página
-document.addEventListener('DOMContentLoaded', verificarDados);
+document.addEventListener('DOMContentLoaded', () => {
+    carregarItensDoCache()
+});
