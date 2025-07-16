@@ -1,17 +1,30 @@
 const itens = [];
 
+function atualizarCacheIntegrantes(integrantes) {
+    localStorage.setItem('integrantes', JSON.stringify(integrantes));
+}
+
+// Atualiza o cache de itens (não atualiza o cache de integrantes)
 function atualizarCache() {
     localStorage.setItem('itens', JSON.stringify(itens));
 }
 
 function cleanCache() {
-    localStorage.removeItem('itens');
-    itens.length = 0; // Limpa o array de itens
-    document.getElementById('tabelaItens').style.display = 'none'; // Oculta a tabela
-    document.getElementById('resultado').style.display = 'none'; // Oculta o resultado
-    document.getElementById('listaIntegrantes').style.display = 'none'; // Limpa os campos de entrada
-    document.getElementById('listaIntegrantes').innerHTML = ''; // Limpa a lista de integrante
-    document.querySelector('label[for="listaIntegrantes"]').style.display = 'none'; // Oculta o label
+    // Confirmação para limpar o cache de itens
+    if (confirm("Tem certeza que deseja limpar o cache de itens?")) {
+        localStorage.removeItem('itens');
+        itens.length = 0; // Limpa o array de itens
+        document.getElementById('tabelaItens').style.display = 'none'; // Oculta a tabela
+        document.getElementById('resultado').style.display = 'none'; // Oculta o resultado
+    }
+
+    // Confirmação para limpar o cache de integrantes
+    if (confirm("Deseja também limpar o cache de integrantes?")) {
+        localStorage.removeItem('integrantes'); // Remove o cache de integrantes
+        document.getElementById('listaIntegrantes').style.display = 'none'; // Oculta os campos de entrada
+        document.getElementById('listaIntegrantes').innerHTML = ''; // Limpa a lista de integrantes
+        document.querySelector('label[for="listaIntegrantes"]').style.display = 'none'; // Oculta o label
+    }
 }
 
 function adicionarItem() {
@@ -41,12 +54,17 @@ function adicionarItem() {
         .filter(p => p)
         .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()); // Ajusta para primeira letra maiúscula
 
-    // Adiciona novos checkboxes se ainda não existirem
-    const listaIntegrantes = document.getElementById('listaIntegrantes');
-    let integrantesAdicionados = false;
+    // Carrega os integrantes existentes do cache
+    const integrantesCache = localStorage.getItem('integrantes');
+    const integrantesExistentes = integrantesCache ? JSON.parse(integrantesCache) : [];
 
-    novosNomes.forEach(nome => {
-        if (nome && !Array.from(listaIntegrantes.children).some(label => label.textContent.trim() === nome)) {
+    // Combina os integrantes existentes com os novos
+    const todosIntegrantes = Array.from(new Set([...integrantesExistentes, ...novosNomes]));
+
+    // Atualiza os checkboxes na interface
+    const listaIntegrantes = document.getElementById('listaIntegrantes');
+    todosIntegrantes.forEach(nome => {
+        if (!Array.from(listaIntegrantes.children).some(label => label.textContent.trim() === nome)) {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = `cb_${nome}`;
@@ -63,12 +81,11 @@ function adicionarItem() {
             label.appendChild(document.createTextNode(` ${nome}`));
 
             listaIntegrantes.appendChild(label);
-            integrantesAdicionados = true;
         }
     });
 
     const labelIntegrantes = document.querySelector('label[for="listaIntegrantes"]');
-    if (listaIntegrantes.children.length > 0 || integrantesAdicionados) {
+    if (listaIntegrantes.children.length > 0) {
         labelIntegrantes.style.display = 'block';
         listaIntegrantes.style.display = 'flex';
     } else {
@@ -153,6 +170,9 @@ function adicionarItem() {
     document.getElementById('tabelaItens').style.display = 'table';
     finalizar();
 
+    // Atualiza o cache de integrantes
+    atualizarCacheIntegrantes(todosIntegrantes);
+
     // Limpa os campos de entrada
     document.getElementById('item').value = '';
     document.getElementById('quantidade').value = '';
@@ -165,7 +185,7 @@ function adicionarItem() {
         if (index > 0) linha.remove(); // Preserva a primeira linha
     });
 
-    atualizarCache()
+    atualizarCache();
 }
 
 function excluirItem(index) {
@@ -443,7 +463,59 @@ function carregarItensDoCache() {
     }
 }
 
+// Atualiza o cache de integrantes
+function atualizarCacheIntegrantes(integrantes) {
+    localStorage.setItem('integrantes', JSON.stringify(integrantes));
+}
+
+// Carrega os integrantes do cache
+function carregarIntegrantesDoCache() {
+    const integrantesCache = localStorage.getItem('integrantes');
+    const listaIntegrantes = document.getElementById('listaIntegrantes');
+
+    if (integrantesCache) {
+        try {
+            const integrantesArmazenados = JSON.parse(integrantesCache);
+
+            // Cria os checkboxes para os integrantes no cache
+            integrantesArmazenados.forEach(nome => {
+                if (!Array.from(listaIntegrantes.children).some(label => label.textContent.trim() === nome)) {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `cb_${nome}`;
+                    checkbox.value = nome;
+                    checkbox.className = 'pessoaCheckbox';
+
+                    const slider = document.createElement('span');
+                    slider.className = 'slider';
+
+                    const label = document.createElement('label');
+                    label.className = 'switch';
+                    label.appendChild(checkbox);
+                    label.appendChild(slider);
+                    label.appendChild(document.createTextNode(` ${nome}`));
+
+                    listaIntegrantes.appendChild(label);
+                }
+            });
+
+            // Atualiza a visibilidade da lista de integrantes
+            const labelIntegrantes = document.querySelector('label[for="listaIntegrantes"]');
+            if (listaIntegrantes.children.length > 0) {
+                labelIntegrantes.style.display = 'block';
+                listaIntegrantes.style.display = 'flex';
+            } else {
+                labelIntegrantes.style.display = 'none';
+                listaIntegrantes.style.display = 'none';
+            }
+        } catch (error) {
+            console.error("Erro ao carregar os integrantes do cache:", error);
+        }
+    }
+}
+
 // Chame a função ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
-    carregarItensDoCache()
+    carregarItensDoCache();
+    carregarIntegrantesDoCache();
 });
