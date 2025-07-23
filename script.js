@@ -233,13 +233,14 @@ function excluirItem(index) {
     // Recalcula os resultados
     finalizar();
 
-    // Oculta a tabela se não houver mais itens
+    // Oculta a tabela e os resultados se não houver mais itens
     if (itens.length === 0) {
         document.getElementById('tabelaItens').style.display = 'none';
         document.getElementById('resultado').style.display = 'none';
     }
 
-    atualizarCache()
+    // Atualiza o cache
+    atualizarCache();
 }
 
 function finalizar() {
@@ -491,3 +492,95 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarItensDoCache();
     carregarIntegrantesDoCache();
 });
+
+function editarItem(index) {
+    const itemParaEditar = itens[index];
+
+    // Verifica se algum input já está preenchido
+    const itemInput = document.getElementById('item').value.trim();
+    const quantidadeInput = document.getElementById('quantidade').value.trim();
+    const valorInput = document.getElementById('valor').value.trim();
+
+    if (itemInput || quantidadeInput || valorInput) {
+        alert("Não é possível editar enquanto há campos preenchidos. Limpe os campos antes de continuar.");
+        return;
+    }
+
+    // Confirmação antes de editar
+    if (confirm("Você realmente deseja editar este item?")) {
+        // Preenche os inputs com os dados do item selecionado
+        document.getElementById('item').value = itemParaEditar.item.split('x ')[1].split(' (')[0]; // Extrai o nome do item
+        document.getElementById('quantidade').value = parseInt(itemParaEditar.item.split('x ')[0]); // Extrai a quantidade
+        document.getElementById('valor').value = (itemParaEditar.valor / parseInt(itemParaEditar.item.split('x ')[0])).toFixed(2); // Calcula o valor unitário
+
+        // Atualiza os checkboxes dos integrantes
+        const checkboxes = document.querySelectorAll('.pessoaCheckbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = itemParaEditar.pessoas.includes(checkbox.value);
+        });
+
+        // Remove o item do array
+        itens.splice(index, 1);
+
+        // Atualiza a tabela
+        const tabela = document.getElementById('tabelaItens').getElementsByTagName('tbody')[0];
+        tabela.innerHTML = ''; // Limpa a tabela
+
+        // Recria a tabela com os itens restantes
+        itens.forEach((item, i) => {
+            const novaLinha = tabela.insertRow();
+            novaLinha.insertCell(0).textContent = item.valor.toFixed(2);
+            novaLinha.insertCell(1).textContent = item.item;
+            novaLinha.insertCell(2).textContent = item.pessoas.join(', ');
+
+            const colunaAcoes = novaLinha.insertCell(3);
+
+            // Contêiner para os botões
+            const containerBotoes = document.createElement('div');
+            containerBotoes.className = 'botao-container'; // Aplica a classe padronizada
+            containerBotoes.style.display = 'flex'; // Garante que os botões fiquem lado a lado
+            containerBotoes.style.justifyContent = 'center'; // Centraliza os botões
+            containerBotoes.style.gap = '10px'; // Adiciona espaçamento entre os botões
+
+            // Botão de excluir
+            const botaoExcluir = document.createElement('button');
+            botaoExcluir.className = 'botao-icone botao-remover remover';
+            botaoExcluir.style.display = 'flex'; // Garante que o botão respeite o estilo flex
+            botaoExcluir.style.alignItems = 'center'; // Centraliza o conteúdo do botão
+            botaoExcluir.onclick = () => {
+                if (confirm("Tem certeza que deseja excluir este item?")) {
+                    excluirItem(i);
+                }
+            };
+
+            const iconeExcluir = document.createElement('span');
+            iconeExcluir.className = 'material-icons';
+            iconeExcluir.textContent = 'delete';
+
+            botaoExcluir.appendChild(iconeExcluir);
+
+            // Botão de editar
+            const botaoEditar = document.createElement('button');
+            botaoEditar.className = 'botao-icone botao-editar editar';
+            botaoEditar.style.display = 'flex'; // Garante que o botão respeite o estilo flex
+            botaoEditar.style.alignItems = 'center'; // Centraliza o conteúdo do botão
+            botaoEditar.onclick = () => editarItem(i);
+
+            const iconeEditar = document.createElement('span');
+            iconeEditar.className = 'material-icons';
+            iconeEditar.textContent = 'edit';
+
+            botaoEditar.appendChild(iconeEditar);
+
+            // Adiciona os botões ao contêiner na ordem correta
+            containerBotoes.appendChild(botaoExcluir); // Excluir à esquerda
+            containerBotoes.appendChild(botaoEditar); // Editar à direita
+
+            colunaAcoes.appendChild(containerBotoes);
+        });
+
+        // Atualiza o cache
+        atualizarCache();
+        finalizar();
+    }
+}
