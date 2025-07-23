@@ -121,16 +121,11 @@ function adicionarItem() {
 
         // Contêiner para os botões
         const containerBotoes = document.createElement('div');
-        containerBotoes.style.display = 'flex';
-        containerBotoes.style.gap = '10px'; // Espaçamento entre os botões
+        containerBotoes.className = 'botao-container'; // Aplica a classe padronizada
 
         // Botão de excluir
         const botaoExcluir = document.createElement('button');
-        botaoExcluir.className = 'botao-icone botao-remover remover'; // Adiciona classes para estilo
-        botaoExcluir.style.background = 'none'; // Remove o fundo
-        botaoExcluir.style.border = 'none'; // Remove a borda
-        botaoExcluir.style.cursor = 'pointer'; // Define o cursor como ponteiro
-        botaoExcluir.style.width = '15px'; // Define a largura do botão
+        botaoExcluir.className = 'botao-icone botao-remover remover';
         botaoExcluir.onclick = () => {
             if (confirm("Tem certeza que deseja excluir este item?")) {
                 excluirItem(i);
@@ -139,31 +134,25 @@ function adicionarItem() {
 
         const iconeExcluir = document.createElement('span');
         iconeExcluir.className = 'material-icons';
-        iconeExcluir.textContent = 'delete'; // Ícone do Material Icons
+        iconeExcluir.textContent = 'delete';
 
         botaoExcluir.appendChild(iconeExcluir);
         containerBotoes.appendChild(botaoExcluir);
 
         // Botão de editar
         const botaoEditar = document.createElement('button');
-        botaoEditar.className = 'botao-icone botao-editar editar'; // Adiciona classes para estilo
-        botaoEditar.style.background = 'none'; // Remove o fundo
-        botaoEditar.style.border = 'none'; // Remove a borda
-        botaoEditar.style.cursor = 'pointer'; // Define o cursor como ponteiro
-        botaoEditar.style.width = '15px'; // Define a largura do botão
+        botaoEditar.className = 'botao-icone botao-editar editar';
         botaoEditar.onclick = () => {
-            editarItem(i); // Função para editar o item
+            editarItem(i);
         };
 
         const iconeEditar = document.createElement('span');
         iconeEditar.className = 'material-icons';
-        iconeEditar.textContent = 'edit'; // Ícone do Material Icons
-        iconeEditar.style.color = 'white'; // Define a cor do ícone
+        iconeEditar.textContent = 'edit';
 
         botaoEditar.appendChild(iconeEditar);
         containerBotoes.appendChild(botaoEditar);
 
-        // Adiciona o contêiner à coluna
         colunaAcoes.appendChild(containerBotoes);
     });
 
@@ -206,16 +195,11 @@ function excluirItem(index) {
 
         // Contêiner para os botões
         const containerBotoes = document.createElement('div');
-        containerBotoes.style.display = 'flex';
-        containerBotoes.style.gap = '10px'; // Espaçamento entre os botões
+        containerBotoes.className = 'botao-container'; // Aplica a classe padronizada
 
         // Botão de excluir
         const botaoExcluir = document.createElement('button');
-        botaoExcluir.className = 'botao-icone botao-remover remover'; // Adiciona classes para estilo
-        botaoExcluir.style.background = 'none'; // Remove o fundo
-        botaoExcluir.style.border = 'none'; // Remove a borda
-        botaoExcluir.style.cursor = 'pointer'; // Define o cursor como ponteiro
-        botaoExcluir.style.width = '15px'; // Define a largura do botão
+        botaoExcluir.className = 'botao-icone botao-remover remover';
         botaoExcluir.onclick = () => {
             if (confirm("Tem certeza que deseja excluir este item?")) {
                 excluirItem(i);
@@ -224,30 +208,25 @@ function excluirItem(index) {
 
         const iconeExcluir = document.createElement('span');
         iconeExcluir.className = 'material-icons';
-        iconeExcluir.textContent = 'delete'; // Ícone do Material Icons
+        iconeExcluir.textContent = 'delete';
 
         botaoExcluir.appendChild(iconeExcluir);
         containerBotoes.appendChild(botaoExcluir);
 
         // Botão de editar
         const botaoEditar = document.createElement('button');
-        botaoEditar.className = 'botao-icone botao-editar editar'; // Adiciona classes para estilo
-        botaoEditar.style.background = 'none'; // Remove o fundo
-        botaoEditar.style.border = 'none'; // Remove a borda
-        botaoEditar.style.cursor = 'pointer'; // Define o cursor como ponteiro
-        botaoEditar.style.width = '15px'; // Define a largura do botão
+        botaoEditar.className = 'botao-icone botao-editar editar';
         botaoEditar.onclick = () => {
-            editarItem(i); // Função para editar o item
+            editarItem(i);
         };
 
         const iconeEditar = document.createElement('span');
         iconeEditar.className = 'material-icons';
-        iconeEditar.textContent = 'edit'; // Ícone do Material Icons
+        iconeEditar.textContent = 'edit';
 
         botaoEditar.appendChild(iconeEditar);
         containerBotoes.appendChild(botaoEditar);
 
-        // Adiciona o contêiner à coluna
         colunaAcoes.appendChild(containerBotoes);
     });
 
@@ -395,6 +374,8 @@ function carregarItensDoCache() {
 
             itens.forEach((item, i) => {
                 const novaLinha = tabela.insertRow();
+                novaLinha.style.height = '10px'; // Define a altura da linha
+
                 novaLinha.insertCell(0).textContent = item.valor.toFixed(2);
                 novaLinha.insertCell(1).textContent = item.item;
                 novaLinha.insertCell(2).textContent = item.pessoas.join(', ');
@@ -403,16 +384,11 @@ function carregarItensDoCache() {
 
                 // Contêiner para os botões
                 const containerBotoes = document.createElement('div');
-                containerBotoes.style.display = 'flex';
-                containerBotoes.style.gap = '10px';
+                containerBotoes.className = 'botao-container'; // Aplica a classe padronizada
 
                 // Botão de excluir
                 const botaoExcluir = document.createElement('button');
                 botaoExcluir.className = 'botao-icone botao-remover remover';
-                botaoExcluir.style.background = 'none';
-                botaoExcluir.style.border = 'none';
-                botaoExcluir.style.cursor = 'pointer';
-                botaoExcluir.style.width = '15px';
                 botaoExcluir.onclick = () => {
                     if (confirm("Tem certeza que deseja excluir este item?")) {
                         excluirItem(i);
@@ -429,10 +405,6 @@ function carregarItensDoCache() {
                 // Botão de editar
                 const botaoEditar = document.createElement('button');
                 botaoEditar.className = 'botao-icone botao-editar editar';
-                botaoEditar.style.background = 'none';
-                botaoEditar.style.border = 'none';
-                botaoEditar.style.cursor = 'pointer';
-                botaoEditar.style.width = '15px';
                 botaoEditar.onclick = () => {
                     editarItem(i);
                 };

@@ -311,10 +311,10 @@ input:checked + .slider:before {
     flex: 0 0 10%; /* Reduz o tamanho do input de "Qtd" */
 }
 
-.botao-icone {
-    flex: 0 0 5%; /* Ajusta o tamanho do botão */
+.botao-container {
+    flex: 0 0 5%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
 }
 
