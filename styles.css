@@ -64,6 +64,8 @@ button {
     cursor: pointer;
     transition: background 0.3s;
     text-align: center;
+    height: 35px;
+    width: 35px;
 }
 
 button.adicionar:hover {
